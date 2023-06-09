@@ -96,6 +96,8 @@ public class Avion {
         System.out.println("Avión " + name + " ha recargado " + cantidad + " unidades de combustible");
     }
 
+
+
     // Otros métodos y getters/setters según sea necesario
 
     private enum EstadoAvion {
