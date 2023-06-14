@@ -4,6 +4,9 @@ package com.example.proyecto32;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * se defina la clase con sus respectivas variable a utilizar
+ */
 public class Porta_aviones extends Lugar {
 
     private String name;
@@ -19,6 +22,10 @@ public class Porta_aviones extends Lugar {
         this.combustibleDisponible = 0;
     }
 
+    /**
+     * Recibe objetos de la clase avion y permite añadorlos a los hangares, si hay esapcio en estos
+     * @param avion
+     */
     @Override
     public void recibir_aviones(Avion avion) {
         if (aviones_en_espe.size() < capHang) {
@@ -33,6 +40,11 @@ public class Porta_aviones extends Lugar {
         return capHang;
     }
 
+    /**
+     * Tramites de aviones, con los abjetos de la clase avion
+     * @param avion
+     * @return
+     */
     @Override
     public Avion tramitar_avion(Avion avion) {
         if (!aviones_en_espe.isEmpty()) {
@@ -51,6 +63,11 @@ public class Porta_aviones extends Lugar {
     }
 
     public double getLatitud() {return latitud;}
+
+    /**
+     * setters y getters
+     * @return
+     */
     @Override
     public List<Avion> getaviones_en_espe() {
         return aviones_en_espe;
@@ -73,3 +90,4 @@ public class Porta_aviones extends Lugar {
     }
 
 }
+
