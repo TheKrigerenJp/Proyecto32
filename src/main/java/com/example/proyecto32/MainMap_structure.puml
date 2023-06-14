@@ -1,0 +1,370 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.example.proyecto32.MainMap",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1322970774 { 
+   	label=example
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_160483032 { 
+   	label=proyecto32
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   AeropuertoV2117354165[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)AeropuertoV2</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   aviones_en_espe: List&lt;Avion&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   capHang: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   combustibleDispo: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ recibir_aviones(avion: Avion)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tramitar_avion(avion: Avion): Avion</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ArduinoReceiver117354165[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ArduinoReceiver</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   dataListener: DataListener [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   dataReceived: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isOpen: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   serialPort: SerialPort [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ connect(portName: String, baudRate: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ disconnect()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Avion117354165[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Avion</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   combustible: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   eficiencia: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   estate: EstadoAvion [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fortaleza: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   speed: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   ubicacionActual: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ actualizarUbicacion(nuevaUbicacion: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ aterrizar()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ despegar(destino: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ gestionarCombustible(cantidad: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Graph1073089910[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Graph</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   adjacencyMatrix: Ruta[][] [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   nodes: List&lt;Lugar&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addEdge(source: Lugar, target: Lugar, peligro: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addNode(lugar: Lugar)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ editEdge(source: Lugar, target: Lugar, peligro: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getNode(index: int): Lugar</TD></TR>
+<TR><TD ALIGN="LEFT" >+ printAdjacencyMatrix()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ recibirAvion(lugar: Lugar, avion: Avion)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ shortestPath(source: Lugar, target: Lugar): List&lt;Ruta&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ListaAvion117354165[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ListaAvion</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   head: Nodo [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   size: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addAvion(avion: Avion)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ agregarLista(listaAviones: ListaAvion, Archivo: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obteberLista(Archivo: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerAvion(indice: int): Avion</TD></TR>
+<TR><TD ALIGN="LEFT" >+ printAviones()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ shellSort()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Lugar117354165[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Lugar</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   latitud: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   longitud: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ recibir_aviones(avion: Avion)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tramitar_avion(avion: Avion): Avion</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+MainMap117354165[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)MainMap</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   animationCanvas: Canvas [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   arduinoReceiver: ArduinoReceiver [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   avionList: view_avion_list [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   cantAvionesI: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   capMinHan: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   gc: GraphicsContext [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mapImage: Image [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nRoutes: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nameAirport: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   pixelReader: PixelReader [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   root: StackPane [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   scene: Scene [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   typs_A: ListaAvion [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- calculateWeight(lat1: double, lon1: double, lat2: double, lon2: double): int</TD></TR>
+<TR><TD ALIGN="LEFT" >- convertLatitudeToY(latitude: double): double</TD></TR>
+<TR><TD ALIGN="LEFT" >- convertLongitudeToX(longitude: double): double</TD></TR>
+<TR><TD ALIGN="LEFT" >- convertXToLongitude(x: double): double</TD></TR>
+<TR><TD ALIGN="LEFT" >- convertYToLatitude(y: double): double</TD></TR>
+<TR><TD ALIGN="LEFT" >- drawAirport(gc: GraphicsContext, x: double, y: double, location: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >- drawMap(gc: GraphicsContext)</TD></TR>
+<TR><TD ALIGN="LEFT" >- drawRoute(gc: GraphicsContext, startX: double, startY: double, endX: double, endY: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ drawTravelingBall(rutas: List&lt;Ruta&gt;, avionn: Avion)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ generateRandomAirports(random: Random)</TD></TR>
+<TR><TD ALIGN="LEFT" >- generateRandomTargets(sourceIndex: int, random: Random): List&lt;Integer&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+<TR><TD ALIGN="LEFT" >- mostrarVentanaAvionListView()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ start(primaryStage: Stage)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ startReceiving()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Nodo536542487[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Nodo</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   avion: Avion [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   siguiente: Nodo [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Porta_aviones117354165[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Porta_aviones</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   aviones_en_espe: List&lt;Avion&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   capHang: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   combustibleDisponible: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ recibir_aviones(avion: Avion)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ tramitar_avion(avion: Avion): Avion</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Ruta117354165[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Ruta</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   despegue: Lugar [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   llegada: Lugar [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   peligro: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Distancia(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ Peso(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+view_avion_list117354165[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)view_avion_list</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   aviones: ObservableList&lt;Avion&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   comboBox: ComboBox&lt;Lugar&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   comboBox_filtro: ComboBox&lt;String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   lugares: List&lt;Lugar&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   op_seleccionada: Lugar [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   view_list: ListView&lt;Avion&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- Avion_x_nombre(nombre: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >- cargarAvionesDesdeArchivo(archivo: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >- filtrarAviones(filtro: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >- insertionSort(lista: List&lt;Avion&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+<TR><TD ALIGN="LEFT" >- ordenarPorEficiencia()</TD></TR>
+<TR><TD ALIGN="LEFT" >- ordenarPorVelocidad()</TD></TR>
+<TR><TD ALIGN="LEFT" >- shellSort(lista: List&lt;Avion&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ start(primaryStage: Stage)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+AeropuertoV2117354165 -> Avion117354165[label="aviones_en_espe
+[0..*]"];
+Graph1073089910 -> Lugar117354165[label="nodes
+[0..*]"];
+Graph1073089910 -> Ruta117354165[label="adjacencyMatrix
+[0..*]"];
+ListaAvion117354165 -> Nodo536542487[label="head
+[0..1]"];
+Lugar117354165 -> AeropuertoV2117354165[arrowhead=none, arrowtail=empty, dir=both];
+Lugar117354165 -> Porta_aviones117354165[arrowhead=none, arrowtail=empty, dir=both];
+MainMap117354165 -> ArduinoReceiver117354165[label="arduinoReceiver
+[0..1]"];
+MainMap117354165 -> ListaAvion117354165[label="typs_A
+[0..1]"];
+MainMap117354165 -> Ruta117354165[label="drawTravelingBall() -> Distancia()"];
+MainMap117354165 -> view_avion_list117354165[label="avionList
+[0..1]"];
+Nodo536542487 -> Avion117354165[label="avion
+[0..1]"];
+Porta_aviones117354165 -> Avion117354165[label="aviones_en_espe
+[0..*]"];
+Ruta117354165 -> Lugar117354165[label="despegue
+[0..1]"];
+Ruta117354165 -> Lugar117354165[label="llegada
+[0..1]"];
+view_avion_list117354165 -> Avion117354165[label="aviones
+[0..*]"];
+view_avion_list117354165 -> Avion117354165[label="view_list
+[0..1]"];
+view_avion_list117354165 -> Graph1073089910[label="start() -> recibirAvion()"];
+view_avion_list117354165 -> Lugar117354165[label="comboBox
+[0..1]"];
+view_avion_list117354165 -> Lugar117354165[label="lugares
+[0..*]"];
+view_avion_list117354165 -> Lugar117354165[label="op_seleccionada
+[0..1]"];
+    
+}
+@enduml

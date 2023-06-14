@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static javafx.application.Application.launch;
+
 public class view_avion_list {
 
     private ListView<Avion> view_list;
@@ -34,11 +36,22 @@ public class view_avion_list {
         launch(args);
     }
 
-    @Override
     public void start(Stage primaryStage) {
         // Crear la lista de aviones
         aviones = FXCollections.observableArrayList();
-        cargarAvionesDesdeArchivo("src/archivos/aviones.txt");
+        Avion avion1 = new Avion("Boeing 787 Dreamliner", 801, 1200, 1000);
+        Avion avion2 = new Avion("Airbus A320neo", 951, 1001, 1000);
+        Avion avion3 = new Avion("Sukhoi Su-35", 1000, 1101, 1000);
+        Avion avion4 = new Avion("Embraer E-Jet E2", 920, 1050, 1000);
+        Avion avion5 = new Avion("Gulfstream G650", 850, 1151, 1000);
+        Avion avion6 = new Avion("Antonov An-225 Mriya", 880, 1002, 1000);
+
+        aviones.add(avion1);
+        aviones.add(avion2);
+        aviones.add(avion3);
+        aviones.add(avion4);
+        aviones.add(avion5);
+        aviones.add(avion6);
         System.out.println(aviones);
 
         // Crear el ListView
@@ -56,7 +69,7 @@ public class view_avion_list {
                             setText(null);
                         } else {
                             String itemText = String.format("%s, %d, %.0f, %d",
-                                    avion.getName(), avion.getSpeed(), avion.getEficiencia(), avion.getFortaleza());
+                                    avion.getNombre(), avion.getVelocidad(), avion.getEficiencia(), avion.getFortaleza());
                             setText(itemText);
                         }
                     }
@@ -64,7 +77,7 @@ public class view_avion_list {
             }
         });
         Label lugarLabel = new Label("Selecciona un Lugar");
-        lugares = MapApp.graph.nodes;
+        lugares = MainMap.Grafo_v2.nodes;
         comboBox = new ComboBox<>();
         comboBox.getItems().addAll(lugares);
         comboBox.setCellFactory(new Callback<ListView<Lugar>, ListCell<Lugar>>() {
@@ -75,7 +88,7 @@ public class view_avion_list {
                     protected void updateItem(Lugar lugar, boolean empty) {
                         super.updateItem(lugar, empty);
                         if (lugar != null) {
-                            setText(lugar.getNombre()); // Mostrar solo el nombre del lugar en el dropdown
+                            setText(lugar.getName()); // Mostrar solo el nombre del lugar en el dropdown
                         } else {
                             setText(null);
                         }
@@ -105,13 +118,13 @@ public class view_avion_list {
         seleccionarBtn.setAlignment(Pos.CENTER_RIGHT);
         seleccionarBtn.setOnAction(event -> {
             Avion avionSeleccionado = new Avion(
-                    view_list.getSelectionModel().getSelectedItem().getName(),
-                    view_list.getSelectionModel().getSelectedItem().getSpeed(),
+                    view_list.getSelectionModel().getSelectedItem().getNombre(),
+                    view_list.getSelectionModel().getSelectedItem().getVelocidad(),
                     view_list.getSelectionModel().getSelectedItem().getEficiencia(),
                     view_list.getSelectionModel().getSelectedItem().getFortaleza());
             if (avionSeleccionado != null) {
                 // Llamar al método de creación del objeto en OtraClase
-                MapApp.graph.recibirAvion(op_seleccionada, avionSeleccionado);
+                MainMap.Grafo_v2.recibirAvion(op_seleccionada, avionSeleccionado);
             }
         });
 
@@ -138,7 +151,7 @@ public class view_avion_list {
         if (filtro.equalsIgnoreCase("Eficiencia")) {
             comparador = Comparator.comparing(Avion::getEficiencia);
         } else if (filtro.equalsIgnoreCase("Velocidad")) {
-            comparador = Comparator.comparing(Avion::getSpeed);
+            comparador = Comparator.comparing(Avion::getVelocidad);
         } else {
             // Si no se selecciona un filtro válido, no se aplica ningún filtro
             return;
@@ -163,7 +176,7 @@ public class view_avion_list {
 
     private void Avion_x_nombre(String nombre) {
         for (Avion avion : aviones) {
-            if (avion.getName().equalsIgnoreCase(nombre)) {
+            if (avion.getNombre().equalsIgnoreCase(nombre)) {
                 view_list.getSelectionModel().select(avion);
                 view_list.scrollTo(avion);
                 return;
@@ -218,7 +231,7 @@ public class view_avion_list {
         for (int i = 1; i < n; ++i) {
             Avion key = lista.get(i);
             int j = i - 1;
-            while (j >= 0 && lista.get(j).getSpeed() > key.getSpeed()) {
+            while (j >= 0 && lista.get(j).getVelocidad() > key.getVelocidad()) {
                 lista.set(j + 1, lista.get(j));
                 j = j - 1;
             }

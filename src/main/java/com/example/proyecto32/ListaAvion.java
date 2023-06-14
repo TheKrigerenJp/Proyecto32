@@ -15,7 +15,7 @@ public class ListaAvion {
         this.size = 0;
     }
     public void obteberLista(String Archivo) {
-        try (BufferedReader lector = new BufferedReader(new FileReader("src/archivos/" + Archivo))) {
+        try (BufferedReader lector = new BufferedReader(new FileReader( Archivo))) {
             String linea;
             while ((linea = lector.readLine()) != null) {
                 String[] datos = linea.split(",");
@@ -33,12 +33,12 @@ public class ListaAvion {
         }
     }
     public void agregarLista(ListaAvion listaAviones, String Archivo) {
-        try (BufferedWriter escritor = new BufferedWriter(new FileWriter("src/archivos/"+Archivo))) {
+        try (BufferedWriter escritor = new BufferedWriter(new FileWriter(Archivo))) {
             ListaAvion.Nodo nodoActual = listaAviones.head;
             while (nodoActual != null) {
                 Avion avion = nodoActual.getAvion();
                 String linea = String.format("%s,%d,%.2f,%d",
-                        avion.getName(), avion.getSpeed(), avion.getEficiencia(), avion.getFortaleza());
+                        avion.getNombre(), avion.getVelocidad(), avion.getEficiencia(), avion.getFortaleza());
                 escritor.write(linea);
                 escritor.newLine();
                 nodoActual = nodoActual.getSiguiente();
@@ -135,8 +135,8 @@ public class ListaAvion {
 
         Nodo nodoActual = head;
         while (nodoActual != null) {
-            System.out.println("Nombre: " + nodoActual.getAvion().getName());
-            System.out.println("Velocidad: " + nodoActual.getAvion().getSpeed());
+            System.out.println("Nombre: " + nodoActual.getAvion().getNombre());
+            System.out.println("Velocidad: " + nodoActual.getAvion().getNombre());
             System.out.println("Eficiencia: " + nodoActual.getAvion().getEficiencia());
             System.out.println("Fortaleza: " + nodoActual.getAvion().getFortaleza());
             System.out.println("--------------------------");

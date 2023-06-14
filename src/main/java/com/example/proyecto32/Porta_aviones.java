@@ -14,7 +14,7 @@ public class Porta_aviones extends Lugar {
     private List<Avion> aviones_en_espe;
     private int combustibleDisponible;
 
-    public Portaavion(String name, int capHang, double latitud, double longitud) {
+    public Porta_aviones(String name, int capHang, double latitud, double longitud) {
         super(latitud, longitud);
         this.name = name;
         this.capHang = capHang;
@@ -62,14 +62,14 @@ public class Porta_aviones extends Lugar {
         }
     }
 
-    public double getLatitud() {return latitud;}
+    public double getLatitude() {return latitud;}
 
     /**
      * setters y getters
      * @return
      */
     @Override
-    public List<Avion> getaviones_en_espe() {
+    public List<Avion> getAviones_en_espe() {
         return aviones_en_espe;
     }
 
@@ -77,15 +77,15 @@ public class Porta_aviones extends Lugar {
         return name;
     }
 
-    public void setLatitud(double latitud) {
+    public void setLatitude(double latitud) {
         this.latitud = latitud;
     }
 
-    public double getLongitud() {
+    public double getLongitude() {
         return longitud;
     }
 
-    public void setLongitud(double longitud) {
+    public void setLongitude(double longitud) {
         this.longitud = longitud;
     }
 

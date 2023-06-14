@@ -48,7 +48,7 @@ public class AeropuertoV2 extends Lugar {
         return aviones_en_espe;
     }
     // Otros métodos y getters/setters según sea necesario
-    public double getLatitud() {
+    public double getLatitude() {
         return latitud;
     }
 
@@ -60,15 +60,16 @@ public class AeropuertoV2 extends Lugar {
         return name;
     }
 
-    public void setLatitud(double latitude) {
+    public void setLatitude(double latitude) {
         this.latitud = latitude;
     }
 
-    public double getLongitud() {
+    public double getLongitude() {
         return longitud;
     }
 
-    public void setLongitud(double longitude) {
+    public void setLongitude(double longitude) {
         this.longitud = longitude;
     }
+
 }

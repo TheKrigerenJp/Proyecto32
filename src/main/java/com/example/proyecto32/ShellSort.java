@@ -42,7 +42,7 @@ public class ShellSort {
 
     public static void imprimirAviones(Avion[] aviones) {
         for (Avion avion : aviones) {
-            System.out.println(avion.getName() + " - Eficiencia: " + avion.getEficiencia());
+            System.out.println(avion.getNombre() + " - Eficiencia: " + avion.getEficiencia());
         }
     }
 }

@@ -9,7 +9,7 @@ public class Aeropuerto {
     private double coordsX;
     private double coordsY;
 
-    public Aeropuerto(int cantidadHang, double coordsX, double coordsY) {
+    public Aeropuerto(String s, int cantidadHang, double coordsX, double coordsY) {
         this.cantidadHang = cantidadHang;
         this.coordsX = coordsX;
         this.coordsY = coordsY;
@@ -40,6 +40,7 @@ public class Aeropuerto {
     public double getCoordsX() {
         return coordsX;
     }
+
 
     public void setCoordsX(double coordenadaX) {
         this.coordsX = coordenadaX;
