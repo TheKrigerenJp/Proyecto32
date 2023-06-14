@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8229fbaf-74b9-4408-a7f2-d96037950118" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/ListaAvion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/Porta_aviones.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/Porta_aviones.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +35,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/dgonz/OneDrive/Escritorio/TEC/III SEMESTRE/DATOS I/Buscaminas"
+    "last_opened_file_path": "C:/Users/dgonz/OneDrive/Escritorio/TEC/III SEMESTRE/DATOS I/proyecto 3 cambios"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
