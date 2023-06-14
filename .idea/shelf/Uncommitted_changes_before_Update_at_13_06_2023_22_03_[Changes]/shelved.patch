@@ -1,0 +1,1403 @@
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>target/\r\n!.mvn/wrapper/maven-wrapper.jar\r\n!**/src/main/**/target/\r\n!**/src/test/**/target/\r\n\r\n### IntelliJ IDEA ###\r\n.idea/modules.xml\r\n.idea/jarRepositories.xml\r\n.idea/compiler.xml\r\n.idea/libraries/\r\n*.iws\r\n*.iml\r\n*.ipr\r\n\r\n### Eclipse ###\r\n.apt_generated\r\n.classpath\r\n.factorypath\r\n.project\r\n.settings\r\n.springBeans\r\n.sts4-cache\r\n\r\n### NetBeans ###\r\n/nbproject/private/\r\n/nbbuild/\r\n/dist/\r\n/nbdist/\r\n/.nb-gradle/\r\nbuild/\r\n!**/src/main/**/build/\r\n!**/src/test/**/build/\r\n\r\n### VS Code ###\r\n.vscode/\r\n\r\n### Mac OS ###\r\n.DS_Store
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+--- a/.gitignore	(revision 230cbe7c8ac36e3994e4f32fde21020e82818bb1)
++++ b/.gitignore	(date 1686355006420)
+@@ -35,4 +35,8 @@
+ .vscode/
+ 
+ ### Mac OS ###
+-.DS_Store
+\ No newline at end of file
++.DS_Store
++/.idea/vcs.xml
++/.idea/misc.xml
++/.idea/workspace.xml
++/.idea/encodings.xml
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_19\" default=\"true\" project-jdk-name=\"19\" project-jdk-type=\"JavaSDK\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 230cbe7c8ac36e3994e4f32fde21020e82818bb1)
++++ b/.idea/misc.xml	(date 1686359300837)
+@@ -1,4 +1,12 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="MavenProjectsManager">
++    <option name="originalFiles">
++      <list>
++        <option value="$PROJECT_DIR$/pom.xml" />
++      </list>
++    </option>
++  </component>
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="19" project-jdk-type="JavaSDK" />
+ </project>
+\ No newline at end of file
+Index: src/main/java/com/example/proyecto32/Lugar.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/proyecto32/Lugar.java b/src/main/java/com/example/proyecto32/Lugar.java
+new file mode 100644
+--- /dev/null	(date 1686357272733)
++++ b/src/main/java/com/example/proyecto32/Lugar.java	(date 1686357272733)
+@@ -0,0 +1,47 @@
++package com.example.proyecto32;
++
++
++import java.util.List;
++
++public abstract class Lugar {
++
++    double latitud;
++    double longitud;
++
++    public Lugar(double latitud, double longitud) {
++        this.latitud = latitud;
++        this.longitud = longitud;
++    }
++
++    public double getLatitud() {
++        return latitud;
++    }
++
++    public void setLatitud(double latitud) {
++        this.latitud = latitud;
++    }
++
++    public double getLongitude() {
++        return longitud;
++    }
++
++    public void setLongitude(double longitud) {
++        this.longitud = longitud;
++    }
++
++    public double getX() {
++        double longitudRange = 180.0;
++        return (longitud + longitudRange / 2.0) / longitudRange * 1280;
++    }
++
++    public double getY() {
++        double latitudRange = 90.0;
++        return (latitud + latitudRange / 2.0) / latitudRange * 720;
++    }
++
++    public abstract void recibir_aviones(Avion avion);
++
++    public abstract Avion tramitar_avion(Avion avion);
++
++    public abstract List<Avion> getaviones_en_espe();
++}
+Index: src/main/java/com/example/proyecto32/Grafo.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/proyecto32/Grafo.java b/src/main/java/com/example/proyecto32/Grafo.java
+new file mode 100644
+--- /dev/null	(date 1686358601040)
++++ b/src/main/java/com/example/proyecto32/Grafo.java	(date 1686358601040)
+@@ -0,0 +1,74 @@
++package com.example.proyecto32;
++
++import java.util.*;
++
++public class Grafo {
++    private int[][] matrizAdyacencia;
++    private List<AeropuertoV2> aeropuertos;
++
++    public Grafo(List<AeropuertoV2> aeropuertos) {
++        this.aeropuertos = aeropuertos;
++        this.matrizAdyacencia = new int[aeropuertos.size()][aeropuertos.size()];
++    }
++
++    public void agregarRuta(AeropuertoV2 origen, AeropuertoV2 destino, int peso) {
++        int origenIndex = aeropuertos.indexOf(origen);
++        int destinoIndex = aeropuertos.indexOf(destino);
++
++        matrizAdyacencia[origenIndex][destinoIndex] = peso;
++    }
++
++    public int obtenerPesoRuta(AeropuertoV2 origen, AeropuertoV2 destino) {
++        int origenIndex = aeropuertos.indexOf(origen);
++        int destinoIndex = aeropuertos.indexOf(destino);
++
++        return matrizAdyacencia[origenIndex][destinoIndex];
++    }
++
++    public List<AeropuertoV2> obtenerMejorRuta(AeropuertoV2 origen, AeropuertoV2 destino) {
++        int origenIndex = aeropuertos.indexOf(origen);
++        int destinoIndex = aeropuertos.indexOf(destino);
++
++        int numVertices = aeropuertos.size();
++        int[][] distancias = new int[numVertices][numVertices];
++        int[][] rutas = new int[numVertices][numVertices];
++
++        for (int i = 0; i < numVertices; i++) {
++            for (int j = 0; j < numVertices; j++) {
++                distancias[i][j] = matrizAdyacencia[i][j];
++
++                if (distancias[i][j] != 0 && distancias[i][j] != Integer.MAX_VALUE) {
++                    rutas[i][j] = i;
++                } else {
++                    rutas[i][j] = -1;
++                }
++            }
++        }
++
++        for (int k = 0; k < numVertices; k++) {
++            for (int i = 0; i < numVertices; i++) {
++                for (int j = 0; j < numVertices; j++) {
++                    if (distancias[i][k] != Integer.MAX_VALUE && distancias[k][j] != Integer.MAX_VALUE &&
++                            distancias[i][k] + distancias[k][j] < distancias[i][j]) {
++                        distancias[i][j] = distancias[i][k] + distancias[k][j];
++                        rutas[i][j] = rutas[k][j];
++                    }
++                }
++            }
++        }
++
++        if (distancias[origenIndex][destinoIndex] == Integer.MAX_VALUE) {
++            return null; // No hay ruta entre el origen y el destino
++        }
++
++        List<AeropuertoV2> ruta = new ArrayList<>();
++        int actual = origenIndex;
++        while (actual != destinoIndex) {
++            ruta.add(aeropuertos.get(actual));
++            actual = rutas[actual][destinoIndex];
++        }
++        ruta.add(aeropuertos.get(destinoIndex));
++
++        return ruta;
++    }
++}
+Index: src/main/java/com/example/proyecto32/Visualizacion.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/proyecto32/Visualizacion.java b/src/main/java/com/example/proyecto32/Visualizacion.java
+new file mode 100644
+--- /dev/null	(date 1686359689023)
++++ b/src/main/java/com/example/proyecto32/Visualizacion.java	(date 1686359689023)
+@@ -0,0 +1,49 @@
++package com.example.proyecto32;
++
++import javafx.application.Application;
++import javafx.scene.Scene;
++import javafx.scene.layout.Pane;
++import javafx.stage.Stage;
++
++import java.util.List;
++
++public class Visualizacion extends Application {
++    public static void main(String[] args) {
++        launch(args);
++    }
++
++    @Override
++    public void start(Stage primaryStage) {
++        Pane pane = new Pane();
++
++        Graph graph = new Graph();
++        graph.addNode(100, 100);
++        graph.addNode(200, 200);
++        graph.addNode(300, 100);
++        graph.addNode(400, 200);
++        graph.addNode(450, 250);
++        graph.addEdge(0, 1, 5);
++        graph.addEdge(1, 2, 18);
++        graph.addEdge(0, 3, 1);
++        graph.addEdge(3, 2, 12);
++        graph.addEdge(3, 4, 1);
++        graph.addEdge(4, 2, 1);
++
++        graph.drawGraph(pane);
++
++        int sourceNode = 0;
++        int targetNode = 2;
++        List<Integer> shortestPath = graph.shortestPath(sourceNode, targetNode);
++
++        System.out.println("Shortest path from node " + sourceNode + " to node " + targetNode + ":");
++        for (int node : shortestPath) {
++            System.out.print(node + " ");
++        }
++        System.out.println();
++
++        primaryStage.setScene(new Scene(pane, 500, 300));
++        primaryStage.setTitle("Graph Visualization");
++        primaryStage.show();
++    }
++
++}
+Index: src/main/java/com/example/proyecto32/Graph.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/proyecto32/Graph.java b/src/main/java/com/example/proyecto32/Graph.java
+new file mode 100644
+--- /dev/null	(date 1686358689651)
++++ b/src/main/java/com/example/proyecto32/Graph.java	(date 1686358689651)
+@@ -0,0 +1,166 @@
++package com.example.proyecto32;
++
++
++import javafx.scene.layout.Pane;
++import javafx.scene.paint.Color;
++import javafx.scene.shape.Circle;
++import javafx.scene.shape.Line;
++
++import java.util.*;
++
++public class Graph {
++
++    private List<Node> nodes;
++    private int[][] MatrizAdy;
++
++    public Graph() {
++        nodes = new ArrayList<>();
++    }
++
++    public void addNode(double x, double y) {
++        nodes.add(new Node(x, y));
++    }
++
++    public void addEdge(int source, int target, int weight) {
++        if (MatrizAdy == null) {
++            MatrizAdy = new int[nodes.size()][nodes.size()];
++        }
++        MatrizAdy[source][target] = weight;
++        MatrizAdy[target][source] = weight;
++    }
++
++    public void drawGraph(Pane pane) {
++        for (int i = 0; i < nodes.size(); i++) {
++            Node node = nodes.get(i);
++            Circle circle = new Circle(node.getX(), node.getY(), 10);
++            circle.setFill(Color.BLUE);
++            pane.getChildren().add(circle);
++            node.setCircle(circle);
++        }
++
++        for (int i = 0; i < nodes.size(); i++) {
++            for (int j = i + 1; j < nodes.size(); j++) {
++                if (MatrizAdy[i][j] > 0) {
++                    Node sourceNode = nodes.get(i);
++                    Node targetNode = nodes.get(j);
++                    Line line = new Line(sourceNode.getX(), sourceNode.getY(), targetNode.getX(), targetNode.getY());
++                    line.setStroke(Color.RED);
++                    pane.getChildren().add(line);
++                }
++            }
++        }
++    }
++
++    public List<Integer> shortestPath(int source, int target) {
++        int numNodes = nodes.size();
++
++        int[] distances = new int[numNodes];
++        Arrays.fill(distances, Integer.MAX_VALUE);
++        distances[source] = 0;
++
++        boolean[] visited = new boolean[numNodes];
++
++        int[] previous = new int[numNodes];
++        Arrays.fill(previous, -1);
++
++        PriorityQueue<NodeDistance> pq = new PriorityQueue<>();
++        pq.offer(new NodeDistance(source, 0));
++
++        while (!pq.isEmpty()) {
++            NodeDistance minNode = pq.poll();
++            int node = minNode.getNode();
++
++            if (node == target) {
++                break;  // Encontró el nodo destino, termina el algoritmo
++            }
++
++            if (visited[node]) {
++                continue;  // Nodo ya visitado, pasa al siguiente
++            }
++
++            visited[node] = true;
++
++            for (int neighbor = 0; neighbor < numNodes; neighbor++) {
++                if (MatrizAdy[node][neighbor] > 0) {
++                    int distance = distances[node] + MatrizAdy[node][neighbor];
++
++                    if (distance < distances[neighbor]) {
++                        distances[neighbor] = distance;
++                        previous[neighbor] = node;
++                        pq.offer(new NodeDistance(neighbor, distance));
++                    }
++                }
++            }
++        }
++
++        // Reconstruye la ruta desde el nodo objetivo hasta el nodo fuente
++        List<Integer> path = new ArrayList<>();
++        int current = target;
++
++        while (current != -1) {
++            path.add(0, current);
++            current = previous[current];
++        }
++
++        return path;
++    }
++
++    public Node getNode(int index) {
++        if (index >= 0 && index < nodes.size()) {
++            return nodes.get(index);
++        }
++        return null;
++    }
++
++    class Node {
++
++        private double x;
++        private double y;
++        private Circle circle;
++
++        public Node(double x, double y) {
++            this.x = x;
++            this.y = y;
++        }
++
++        public double getX() {
++            return x;
++        }
++
++        public double getY() {
++            return y;
++        }
++
++        public Circle getCircle() {
++            return circle;
++        }
++
++        public void setCircle(Circle circle) {
++            this.circle = circle;
++        }
++    }
++
++    private class NodeDistance implements Comparable<NodeDistance> {
++
++        private int node;
++        private int distance;
++
++        public NodeDistance(int node, int distance) {
++            this.node = node;
++            this.distance = distance;
++        }
++
++        public int getNode() {
++            return node;
++        }
++
++        public int getDistance() {
++            return distance;
++        }
++
++        @Override
++        public int compareTo(NodeDistance other) {
++            return Integer.compare(distance, other.distance);
++        }
++    }
++}
+Index: src/main/java/module-info.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>module com.example.proyecto32 {\r\n    requires javafx.controls;\r\n    requires javafx.fxml;\r\n\r\n\r\n    opens com.example.proyecto32 to javafx.fxml;\r\n    exports com.example.proyecto32;\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/module-info.java b/src/main/java/module-info.java
+--- a/src/main/java/module-info.java	(revision 230cbe7c8ac36e3994e4f32fde21020e82818bb1)
++++ b/src/main/java/module-info.java	(date 1686359086033)
+@@ -1,6 +1,7 @@
+ module com.example.proyecto32 {
+     requires javafx.controls;
+     requires javafx.fxml;
++    requires java.logging;
+ 
+ 
+     opens com.example.proyecto32 to javafx.fxml;
+Index: src/main/java/com/example/proyecto32/Ruta.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.proyecto32;\r\n\r\npublic class Ruta {\r\n    private double peligro;\r\n    private Lugar despegue;\r\n    private Lugar llegada;\r\n\r\n    public Ruta(Lugar salida, Lugar destino, double peligro) {\r\n        this.despegue = salida;\r\n        this.llegada = destino;\r\n        this.peligro = peligro;\r\n    }\r\n\r\n    public double Distancia() {\r\n        double latitud1 = Math.toRadians(despegue.getLatitude());\r\n        double longitud1 = Math.toRadians(despegue.getLongitude());\r\n        double latitud2 = Math.toRadians(llegada.getLatitude());\r\n        double longitud2 = Math.toRadians(llegada.getLongitude());\r\n\r\n        double dlon = longitud2 - longitud1;\r\n        double dlat = latitud2 - latitud1;\r\n\r\n        double a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(latitud1) * Math.cos(latitud2) * Math.pow(Math.sin(dlon / 2), 2);\r\n        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));\r\n\r\n        // Radio de la Tierra en kilómetros\r\n        double r = 1000;\r\n\r\n        double distancia = r * c;\r\n        return distancia;\r\n    }\r\n\r\n    public double Peso() {\r\n        double distancia = Distancia();\r\n        double peso = distancia;\r\n\r\n        if (llegada instanceof Porta_aviones) {\r\n            peso *= 1.2; // Aumenta el peso en un 20% si el destino es un portaaviones\r\n        } else {\r\n            peso *= 1; // Aumenta el peso en un 0% si el destino es un aeropuerto\r\n        }\r\n\r\n        peso += peligro; // Añade el valor del peligro a la distancia\r\n\r\n        return peso;\r\n    }\r\n\r\n    // Getters y setters\r\n\r\n    public Lugar getDespegue() {\r\n        return despegue;\r\n    }\r\n\r\n    public void setDespegue(Lugar salida) {\r\n        this.despegue = despegue;\r\n    }\r\n\r\n    public Lugar getLlegada() {\r\n        return llegada;\r\n    }\r\n\r\n    public void setLlegada(Lugar destino) {\r\n        this.llegada = llegada;\r\n    }\r\n\r\n    public double getPeligro() {\r\n        return peligro;\r\n    }\r\n\r\n    public void setPeligro(double peligro) {\r\n        this.peligro = peligro;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/proyecto32/Ruta.java b/src/main/java/com/example/proyecto32/Ruta.java
+--- a/src/main/java/com/example/proyecto32/Ruta.java	(revision 230cbe7c8ac36e3994e4f32fde21020e82818bb1)
++++ b/src/main/java/com/example/proyecto32/Ruta.java	(date 1686357272687)
+@@ -12,9 +12,9 @@
+     }
+ 
+     public double Distancia() {
+-        double latitud1 = Math.toRadians(despegue.getLatitude());
++        double latitud1 = Math.toRadians(despegue.getLatitud());
+         double longitud1 = Math.toRadians(despegue.getLongitude());
+-        double latitud2 = Math.toRadians(llegada.getLatitude());
++        double latitud2 = Math.toRadians(llegada.getLatitud());
+         double longitud2 = Math.toRadians(llegada.getLongitude());
+ 
+         double dlon = longitud2 - longitud1;
+Index: src/main/java/com/example/proyecto32/MainMap.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/proyecto32/MainMap.java b/src/main/java/com/example/proyecto32/MainMap.java
+new file mode 100644
+--- /dev/null	(date 1686715412590)
++++ b/src/main/java/com/example/proyecto32/MainMap.java	(date 1686715412590)
+@@ -0,0 +1,675 @@
++package com.example.proyecto32;
++
++import static java.lang.System.gc;
++import javafx.application.Application;
++import javafx.scene.Scene;
++import javafx.scene.canvas.Canvas;
++import javafx.scene.canvas.GraphicsContext;
++import javafx.scene.image.Image;
++import javafx.scene.layout.StackPane;
++import javafx.stage.Stage;
++
++import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.Collections;
++import java.util.List;
++import java.util.PriorityQueue;
++import java.util.Random;
++import java.util.logging.Level;
++import java.util.logging.Logger;
++import javafx.animation.AnimationTimer;
++import static javafx.application.Application.launch;
++import javafx.application.Platform;
++import javafx.scene.control.Button;
++import javafx.scene.effect.DropShadow;
++import javafx.scene.image.PixelReader;
++import javafx.scene.paint.Color;
++import javafx.stage.StageStyle;
++
++public class MainMap extends Application {
++
++    private static final double MAP_WIDTH = 1280;
++    private static final double MAP_HEIGHT = 720;
++    private static final int NUM_AIRPORTS = 6;
++    private int nameAirport = 0;
++    private Image mapImage;
++    private PixelReader pixelReader;
++    public static MainMap.Graph graph;
++    public static List<Lugar> ubicaciones = new ArrayList<>();
++
++    private GraphicsContext gc;
++    private int nRoutes = 100;
++    private StackPane root;
++    private Scene scene;
++    private Canvas animationCanvas = new Canvas(MAP_WIDTH, MAP_HEIGHT);
++    public static List<Avion> avionesEnVuelo = new ArrayList<>();
++    private LinkedListAvion tiposAvion = new LinkedListAvion();
++    private int capMinHan = 6;
++    private int cantAvionesI = 2;
++    AvionListView avionList = new AvionListView();
++    private ArduinoReceiver arduinoReceiver = new ArduinoReceiver();
++    public static String dataReceived = "0";
++    public static int indexAvion;
++    @Override
++    public void start(Stage primaryStage) {
++        Thread receivingThread = new Thread(() -> {
++            startReceiving();
++        });
++
++        receivingThread.start();
++
++        Thread threadd = new Thread(() -> {
++            try {
++                Thread.sleep(3000); // Pausa de 3 segundos (3000 milisegundos)
++            } catch (InterruptedException e) {
++                e.printStackTrace();
++            }
++
++            Platform.runLater(() -> mostrarVentanaAvionListView());
++
++            while (true) {
++                // ... código del bucle principal ...
++            }
++        });
++
++        threadd.start();
++        tiposAvion.cargarListaAviones("aviones.txt");
++        tiposAvion.imprimirAviones();
++        mapImage = new Image("file:src/images/map.png");  // Ruta de la imagen del mapa
++        pixelReader = mapImage.getPixelReader();
++
++        Canvas canvas = new Canvas(MAP_WIDTH, MAP_HEIGHT);
++        gc = canvas.getGraphicsContext2D();
++        root = new StackPane(canvas);
++        scene = new Scene(root, MAP_WIDTH, MAP_HEIGHT);
++        primaryStage.setTitle("Map App");
++        primaryStage.setScene(scene);
++        primaryStage.show();
++
++        // Dibujar el mapa como fondo
++        drawMap(gc);
++
++        // Generar ubicaciones aleatorias y colocar aeropuertos
++        Random random = new Random();
++        graph = new MapApp.Graph();
++
++        generateRandomAirports(random);
++
++        int[] nodeEdgesCount = new int[NUM_AIRPORTS];
++        int totalEdges = 0;
++        int MAX_EDGES = 100; // Cambia este valor según tus necesidades
++
++        for (int i = 0; i < NUM_AIRPORTS; i++) {
++            nodeEdgesCount[i] = 0; // Inicializar el contador en cero para cada nodo
++
++            List<Integer> randomTargets = generateRandomTargets(i, random);
++
++            for (int j : randomTargets) {
++                if (nodeEdgesCount[i] < nRoutes && nodeEdgesCount[j] < nRoutes && totalEdges < MAX_EDGES) {
++                    double sourceLatitude = graph.getNode(i).getLatitude();
++                    double sourceLongitude = graph.getNode(i).getLongitude();
++                    double targetLatitude = graph.getNode(j).getLatitude();
++                    double targetLongitude = graph.getNode(j).getLongitude();
++                    double sourceX = graph.getNode(i).getX();
++                    double sourceY = graph.getNode(i).getY();
++                    double targetX = graph.getNode(j).getX();
++                    double targetY = graph.getNode(j).getY();
++
++                    drawRoute(gc, sourceX, sourceY, targetX, targetY);
++                    int weight = calculateWeight(sourceLatitude, sourceLongitude, targetLatitude, targetLongitude);
++
++                    graph.addEdge(graph.getNode(i), graph.getNode(j), 1);
++
++                    nodeEdgesCount[i]++;
++                    nodeEdgesCount[j]++;
++                    totalEdges++;
++
++                }
++            }
++        }
++        System.out.println(ubicaciones);
++
++        //graph.editEdge(ubicaciones.get(0), ubicaciones.get(1), 1.5);
++        graph.printAdjacencyMatrix();
++        //System.out.println("Mas corto: " + graph.shortestPath(ubicaciones.get(0), ubicaciones.get(8)));
++
++//        List<Lugar> ruta2 = graph.shortestPath(ubicaciones.get(0), ubicaciones.get(4));
++//        
++        Thread thread = new Thread(() -> {
++            while (true) {
++                List<Ruta> ruta = graph.shortestPath(ubicaciones.get((random.nextInt(NUM_AIRPORTS))), ubicaciones.get((random.nextInt(NUM_AIRPORTS))));
++                try {
++                    if (!ruta.get(0).getSalida().getAvionesEsperando().isEmpty()) {
++                        Avion avionn = (Avion) ruta.get(0).getSalida().getAvionesEsperando().get(0);
++                        Platform.runLater(() -> drawTravelingBall(ruta, avionn));
++                    } else {
++                        // La lista avionesEsperando está vacía, manejar este caso adecuadamente.
++                        // Por ejemplo, puedes imprimir un mensaje de error o tomar alguna acción alternativa.
++                        System.out.println("La lista avionesEsperando está vacía.");
++                    }
++                } catch (IndexOutOfBoundsException e) {
++
++                }
++                try {
++                    Thread.sleep(random.nextInt(3) * 300); // Pausa de 2 segundos (2000 milisegundos)
++                } catch (InterruptedException e) {
++
++                    e.printStackTrace();
++                }
++            }
++        });
++
++        thread.start();
++        System.out.println("Combustible Avion 1 de 1: " + ubicaciones.get(1).getAvionesEsperando().get(0).getCombustible());
++
++    }
++
++    public void setData(String data) {
++        this.dataReceived = data;
++
++    }
++
++    public void drawTravelingBall(List<Ruta> rutas, Avion avionn) {
++        if (rutas.isEmpty() || avionn == null) {
++            // No hay rutas en la lista
++            return;
++        }
++        avionesEnVuelo.add(avionn);
++        //System.out.println("Aviones en vuelo: " + avionesEnVuelo);
++        Ruta ruta = rutas.get(0); // Obtener la primera ruta de la lista
++        rutas.remove(0); // Eliminar la primera ruta de la lista
++        // Convertir las coordenadas de latitud y longitud a coordenadas cartesianas
++        double startX = convertLongitudeToX(ruta.getSalida().getLongitude());
++        double startY = convertLatitudeToY(ruta.getSalida().getLatitude());
++        double endX = convertLongitudeToX(ruta.getDestino().getLongitude());
++        double endY = convertLatitudeToY(ruta.getDestino().getLatitude());
++        double distance = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
++        // Crear un nuevo Stage para la animación
++        Stage animationStage = new Stage();
++        animationStage.initStyle(StageStyle.TRANSPARENT);
++        animationStage.setAlwaysOnTop(true);
++
++        // Crear un nuevo Canvas para la animación
++        GraphicsContext animationGC = animationCanvas.getGraphicsContext2D();
++
++        // Configurar el Stage y la escena
++        StackPane root2 = new StackPane(animationCanvas);
++        root.getChildren().add(root2);
++        // Crear el botón y establecer su posición
++
++
++
++
++        //Scene scene = new Scene(root, MAP_WIDTH, MAP_HEIGHT);
++        scene.setFill(Color.TRANSPARENT);
++        //animationStage.setScene(scene);
++        //animationStage.show();
++
++        // Configurar la animación
++        final int framesPerSecond = 60;
++        final double duration = ruta.calcularDistancia() * 2 * ruta.getPeligro() / avionn.getVelocidad(); // Duración de la animación en segundos
++        final double totalFrames = framesPerSecond * duration;
++
++        double currentX = startX;
++        double currentY = startY;
++
++        Avion avionDespachado = ruta.getSalida().despacharAvion(avionn);
++        avionn.despegar(ruta.getDestino());
++
++        AnimationTimer animationTimer = new AnimationTimer() {
++
++            private double frameCount = 0;
++
++
++            @Override
++            public void handle(long now) {
++                frameCount++;
++                if (avionesEnVuelo.size()<=indexAvion){
++                    indexAvion = avionesEnVuelo.size()-1;
++                }
++                if (dataReceived != null) {
++                    try {
++                        System.out.println("Datos recibidos: " + dataReceived);
++                        //System.out.println("Aviones en vuelo print boton :" + avionesEnVuelo);
++                        avionesEnVuelo.get(0).destruir();
++                        // Eliminar el objeto de la lista (puedes ajustar la lógica según tus necesidades)
++                        avionesEnVuelo.remove(0);
++                        //System.out.println("Objeto eliminado: " + objetoEliminado);
++
++                        Thread.sleep(200);
++                    } catch (InterruptedException ex) {
++                        Logger.getLogger(MapApp.class.getName()).log(Level.SEVERE, null, ex);
++                    }
++                    dataReceived = null;
++                }
++
++                if (frameCount <= totalFrames) {
++                    // Calcular la posición actual de la bola
++                    double t = frameCount / totalFrames;
++                    double currentPosX = startX + t * (endX - startX);
++                    double currentPosY = startY + t * (endY - startY);
++                    double distancia = calculateWeight(startY, startX, currentPosY, currentPosX);
++                    // Limpiar el canvas y dibujar el mapa
++                    animationGC.clearRect(currentPosX - 10, currentPosY - 10, 20, 20);
++                    //drawMap(animationGC);
++
++                    //System.out.println("Distancia:  " + ruta.calcularPeso() * (distancia / ((distance))));
++// Dibujar la ruta
++                    //System.out.println("Eficiencia: " + avionn.getEficiencia());
++                    avionn.consumirCombustible((int) (avionn.getEficiencia() / 30));
++                    //drawRoute(animationGC, startX, startY, endX, endY);
++                    // Dibujar la bola en la posición actual
++                    if (!avionesEnVuelo.isEmpty()) {
++                        System.out.println("Index Avion "+indexAvion);
++                        if (avionesEnVuelo.get(indexAvion) == avionn) {
++                            animationGC.setFill(Color.WHITE);
++                        } else {
++
++                            animationGC.setFill(Color.BLACK);
++                        }
++                    }
++                    animationGC.fillOval(currentPosX - 5, currentPosY - 5, 10, 10);
++                    if (avionn.getEstado() == Avion.EstadoAvion.DESTRUIDO) {
++                        animationGC.setFill(Color.ORANGE);
++
++                        animationGC.fillOval(currentPosX - 5, currentPosY - 5, 10, 10);
++                        graph.editEdge(ruta.getSalida(), ruta.getDestino(), 0.2);
++                        stop();
++                    }
++                    if (avionn.getCombustible() <= 0) {
++                        System.out.println("Avion ha explotado");
++                        animationGC.setFill(Color.ORANGE);
++                        animationGC.fillOval(currentPosX - 5, currentPosY - 5, 10, 10);
++                        avionn.gestionarCombustible((int) -(avionn.getEficiencia()));
++                        avionesEnVuelo.remove(avionn);
++                        graph.editEdge(ruta.getSalida(), ruta.getDestino(), 0.2);
++                        graph.printAdjacencyMatrix();
++                        stop();
++                    }
++                } else {
++                    try {
++                        // La animación ha terminado, detener el AnimationTimer
++
++                        stop();
++
++                    } catch (Exception ex) {
++                        Logger.getLogger(MapApp.class.getName()).log(Level.SEVERE, null, ex);
++                    }
++
++                    // Cerrar el Stage de la animación
++                    //avionn.gestionarCombustible((int) -(ruta.calcularPeso()));
++                    // Actualizar el mapa principal con la bola en la posición final
++                    //gc.clearRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
++                    //drawMap(gc);
++                    //drawRoute(gc, startX, startY, endX, endY);
++                    animationGC.setFill(Color.RED);
++                    animationGC.fillOval(endX - 5, endY - 5, 10, 10);
++                    ruta.getDestino().recibirAvion(avionDespachado);
++                    avionn.aterrizar();
++                    avionesEnVuelo.remove(avionn);
++                    graph.editEdge(ruta.getSalida(), ruta.getDestino(), -0.1);
++                    //System.out.println("Distancia recorrida en total:  " + ruta.calcularPeso());
++                    // Llamar recursivamente al método para la siguiente ruta en la lista
++                    drawTravelingBall(rutas, avionn);
++                    //graph.editEdge(ubicaciones.get(0), ubicaciones.get(1), -0.5);
++                }
++            }
++        };
++
++        // Iniciar la animación
++        animationTimer.start();
++
++    }
++
++    private double convertLongitudeToX(double longitude) {
++        // Convertir la longitud a la coordenada X correspondiente
++        double longitudeRange = 180.0; // Rango de longitudes posibles (-180 a 180)
++        return (longitude + longitudeRange / 2.0) / longitudeRange * MAP_WIDTH;
++    }
++
++    private double convertLatitudeToY(double latitude) {
++        // Convertir la latitud a la coordenada Y correspondiente
++        double latitudeRange = 90.0; // Rango de latitudes posibles (-90 a 90)
++        return (latitude + latitudeRange / 2.0) / latitudeRange * MAP_HEIGHT;
++    }
++
++    public void generateRandomAirports(Random random) {
++        for (int i = 0; i < NUM_AIRPORTS; i++) {
++            double x, y;
++            boolean isOnLand;
++
++            x = random.nextDouble() * MAP_WIDTH;
++            y = random.nextDouble() * MAP_HEIGHT;
++
++            Color pixelColor = pixelReader.getColor((int) x, (int) y);
++            double hue = pixelColor.getHue();
++            double saturation = pixelColor.getSaturation();
++            double brightness = pixelColor.getBrightness();
++
++            boolean isGreen = hue >= 60 && hue <= 180 && saturation >= 0.3 && brightness >= 0.3;
++            isOnLand = isGreen; // Si el color no está en el rango de tonos de verde, no está en el mar
++
++            if (isOnLand) {
++                // Obtener las coordenadas de latitud y longitud
++                double latitude = convertYToLatitude(y);
++                double longitude = convertXToLongitude(x);
++
++                AirPort airport = new AirPort("Aeropuerto " + i, ((random.nextInt(3)) + capMinHan), latitude, longitude);
++
++                int z = 0;
++                while (z < (cantAvionesI)) {
++                    Avion avion = new Avion(tiposAvion.obtenerAvion(7).getNombre(), tiposAvion.obtenerAvion(0).getVelocidad(), tiposAvion.obtenerAvion(0).getEficiencia(), tiposAvion.obtenerAvion(0).getFortaleza());
++
++                    airport.recibirAvion(avion);
++                    z++;
++                }
++
++                ubicaciones.add(airport);
++                System.out.println(airport.getNombre());
++
++                // Dibujar el aeropuerto
++                drawAirport(gc, x, y, airport.getNombre());
++
++                System.out.println("Aeropuerto " + (i + 1) + ": Latitud = " + latitude + ", Longitud = " + longitude);
++
++                graph.addNode(airport);
++            }
++
++            if (!isOnLand) {
++                // Obtener las coordenadas de latitud y longitud
++                double latitude = convertYToLatitude(y);
++                double longitude = convertXToLongitude(x);
++
++                Portaavion portaAviones = new Portaavion(("Portaaviones " + i), ((random.nextInt(3)) + capMinHan), latitude, longitude);
++                ubicaciones.add(portaAviones);
++                System.out.println(portaAviones.getNombre());
++//                Avion avion = new Avion("Avion", (random.nextInt(30)) + 250, 12, 3);
++//                portaAviones.recibirAvion(avion);
++                // Dibujar el portaaviones
++                drawAirport(gc, x, y, portaAviones.getNombre());
++                int z = 0;
++                while (z < cantAvionesI) {
++                    Avion avionPortaAvion = new Avion(tiposAvion.obtenerAvion(0).getNombre(), tiposAvion.obtenerAvion(0).getVelocidad(), tiposAvion.obtenerAvion(0).getEficiencia(), tiposAvion.obtenerAvion(0).getFortaleza());
++                    portaAviones.recibirAvion(avionPortaAvion);
++                    z++;
++                }
++                System.out.println("Portaaviones " + (i + 1) + ": Latitud = " + latitude + ", Longitud = " + longitude);
++
++                graph.addNode(portaAviones);
++            }
++
++        }
++    }
++
++    private List<Integer> generateRandomTargets(int sourceIndex, Random random) {
++        List<Integer> randomTargets = new ArrayList<>();
++
++        for (int i = 0; i < NUM_AIRPORTS; i++) {
++            if (i != sourceIndex) {
++                randomTargets.add(i);
++            }
++        }
++
++        Collections.shuffle(randomTargets, random);
++        return randomTargets.subList(0, 2); // Obtener los primeros 2 elementos de forma aleatoria
++    }
++
++    private void drawMap(GraphicsContext gc) {
++        // Dibujar el mapa como fondo
++        gc.drawImage(mapImage, 0, 0, MAP_WIDTH, MAP_HEIGHT);
++
++        // Dibujar elementos adicionales del mapa (carreteras, fronteras, etc.)
++        // ...
++    }
++
++    private void drawAirport(GraphicsContext gc, double x, double y, String location) {
++        // Dibujar el aeropuerto
++        gc.setFill(Color.RED);
++        gc.fillOval(x - 5, y - 5, 10, 10);
++
++        // Agregar la ubicación encima del aeropuerto
++        gc.setFill(Color.BLACK);
++        gc.fillText(location, x - 35, y - 10);
++    }
++
++    private void drawRoute(GraphicsContext gc, double startX, double startY, double endX, double endY) {
++        gc.setStroke(Color.RED);
++        gc.setLineWidth(2);
++
++        // Configurar el trazo punteado
++        double dashSize = 5; // Tamaño de cada segmento de línea
++        double gapSize = 7; // Tamaño del espacio entre segmentos
++        gc.setLineDashes(dashSize, gapSize);
++
++        // Agregar efecto de sombra
++        gc.setEffect(new DropShadow(10, Color.BLACK));
++
++        gc.strokeLine(startX, startY, endX, endY);
++
++        // Restaurar el trazo sólido por defecto
++        gc.setLineDashes(null);
++    }
++
++    public void startReceiving() {
++        // Especifica el nombre del puerto y la velocidad de transmisión
++        String portName = "COM6";
++        int baudRate = 9600;
++
++        // Conecta con el dispositivo Arduino
++        arduinoReceiver.connect(portName, baudRate);
++
++        // Espera a recibir datos (puedes agregar más lógica aquí si es necesario)
++        try {
++            Thread.sleep(100000000); // Espera 5 segundos
++        } catch (InterruptedException e) {
++            e.printStackTrace();
++        }
++
++        // Desconecta el dispositivo Arduino
++        arduinoReceiver.disconnect();
++    }
++
++    private double convertYToLatitude(double y) {
++        // Convertir la coordenada Y del clic al valor de latitud correspondiente
++        double latitudeRange = 90.0; // Rango de latitudes posibles (-90 a 90)
++        return (y / MAP_HEIGHT) * latitudeRange - latitudeRange / 2.0;
++    }
++
++    private double convertXToLongitude(double x) {
++        // Convertir la coordenada X del clic al valor de longitud correspondiente
++        double longitudeRange = 180.0; // Rango de longitudes posibles (-180 a 180)
++        return (x / MAP_WIDTH) * longitudeRange - longitudeRange / 2.0;
++    }
++
++    private void mostrarVentanaAvionListView() {
++        Stage stage = new Stage();
++        AvionListView avionListView = new AvionListView();
++        avionListView.start(stage);
++    }
++
++    private int calculateWeight(double lat1, double lon1, double lat2, double lon2) {
++        // Calcular el peso (distancia) entre dos coordenadas geográficas
++        // Puedes implementar aquí la fórmula de cálculo de distancia entre dos puntos geográficos
++        // Por ejemplo, la distancia euclidiana en un plano
++        double dx = lon2 - lon1;
++        double dy = lat2 - lat1;
++        double distance = Math.sqrt(dx * dx + dy * dy);
++        return (int) distance;
++    }
++
++    public static void main(String[] args) {
++
++        launch(args);
++
++    }
++
++    public class Graph {
++
++        List<Lugar> nodes;
++        private Ruta[][] adjacencyMatrix;
++
++        public Graph() {
++            nodes = new ArrayList<>();
++            adjacencyMatrix = new Ruta[0][0];
++        }
++
++        public List<Lugar> getNodes() {
++            return nodes;
++        }
++
++        public void addNode(Lugar lugar) {
++            nodes.add(lugar);
++
++            Ruta[][] newMatrix = new Ruta[nodes.size()][nodes.size()];
++            for (int i = 0; i < adjacencyMatrix.length; i++) {
++                System.arraycopy(adjacencyMatrix[i], 0, newMatrix[i], 0, adjacencyMatrix[i].length);
++            }
++            adjacencyMatrix = newMatrix;
++        }
++
++        public void recibirAvion(Lugar lugar, Avion avion) {
++            nodes.get(nodes.indexOf(lugar)).recibirAvion(avion);
++
++        }
++
++        public void editEdge(Lugar source, Lugar target, double peligro) {
++            int sourceIndex = nodes.indexOf(source);
++            int targetIndex = nodes.indexOf(target);
++
++            if (sourceIndex >= 0 && sourceIndex < nodes.size() && targetIndex >= 0 && targetIndex < nodes.size()) {
++                Ruta ruta = adjacencyMatrix[sourceIndex][targetIndex];
++                if (ruta != null) {
++                    //ruta.setPeligro(peligro);
++                    adjacencyMatrix[sourceIndex][targetIndex].setPeligro(peligro);
++                } else {
++                    // Si la ruta no existe, puedes agregarla como una nueva ruta
++                    Ruta newRuta = new Ruta(source, target, peligro);
++                    adjacencyMatrix[sourceIndex][targetIndex] = newRuta;
++                }
++            }
++        }
++
++        public void printAdjacencyMatrix() {
++            int numNodes = nodes.size();
++
++            System.out.print("     ");
++            for (int i = 0; i < numNodes; i++) {
++                System.out.printf("%5d", i);
++            }
++            System.out.println();
++
++            for (int i = 0; i < numNodes; i++) {
++                System.out.printf("%7d", i);
++                for (int j = 0; j < numNodes; j++) {
++                    if (adjacencyMatrix[i][j] == null) {
++                        System.out.printf("%7s", "0");
++                    } else {
++                        System.out.printf("%7d", (int) adjacencyMatrix[i][j].calcularPeso());
++                    }
++                }
++                System.out.println();
++            }
++        }
++
++        public Lugar getNode(int index) {
++            return nodes.get(index);
++        }
++
++        public void addEdge(Lugar source, Lugar target, int peligro) {
++            int sourceIndex = nodes.indexOf(source);
++            int targetIndex = nodes.indexOf(target);
++            Ruta ruta = new Ruta(source, target, peligro);
++            adjacencyMatrix[sourceIndex][targetIndex] = ruta;
++            //adjacencyMatrix[targetIndex][sourceIndex] = ruta;
++        }
++
++        public List<Ruta> shortestPath(Lugar source, Lugar target) {
++            int numNodes = nodes.size();
++            int sourceIndex = nodes.indexOf(source);
++            int targetIndex = nodes.indexOf(target);
++
++            int[] distances = new int[numNodes];
++            Arrays.fill(distances, Integer.MAX_VALUE);
++            distances[sourceIndex] = 0;
++
++            boolean[] visited = new boolean[numNodes];
++
++            int[] previous = new int[numNodes];
++            Arrays.fill(previous, -1);
++
++            PriorityQueue<NodeDistance> pq = new PriorityQueue<>();
++            pq.offer(new NodeDistance(sourceIndex, 0));
++
++            while (!pq.isEmpty()) {
++                NodeDistance minNode = pq.poll();
++                int node = minNode.getNode();
++
++                if (node == targetIndex) {
++                    break;  // Encontró el nodo destino, termina el algoritmo
++                }
++
++                if (visited[node]) {
++                    continue;  // Nodo ya visitado, pasa al siguiente
++                }
++
++                visited[node] = true;
++
++                for (int neighbor = 0; neighbor < numNodes; neighbor++) {
++                    if (adjacencyMatrix[node][neighbor] != null) {
++                        double distance = (double) (distances[node] + adjacencyMatrix[node][neighbor].calcularPeso());
++
++                        if (distance < distances[neighbor]) {
++                            distances[neighbor] = (int) distance;
++                            previous[neighbor] = node;
++                            pq.offer(new NodeDistance(neighbor, (int) distance));
++                        }
++                    }
++                }
++            }
++
++            // Reconstruye la ruta desde el nodo objetivo hasta el nodo fuente
++            List<Integer> path = new ArrayList<>();
++            int current = targetIndex;
++
++            while (current != -1) {
++                path.add(0, current);
++                current = previous[current];
++            }
++
++            List<Ruta> pathRutas = new ArrayList<>();
++            for (int i = 0; i < path.size() - 1; i++) {
++                int fromIndex = path.get(i);
++                int toIndex = path.get(i + 1);
++                Ruta ruta = adjacencyMatrix[fromIndex][toIndex];
++                pathRutas.add(ruta);
++            }
++
++            return pathRutas;
++        }
++
++        private static class NodeDistance implements Comparable<NodeDistance> {
++
++            private int node;
++            private int distance;
++
++            public NodeDistance(int node, int distance) {
++                this.node = node;
++                this.distance = distance;
++            }
++
++            public int getNode() {
++                return node;
++            }
++
++            public int getDistance() {
++                return distance;
++            }
++
++            @Override
++            public int compareTo(NodeDistance other) {
++                return Integer.compare(distance, other.distance);
++            }
++        }
++    }
++
++}
+Index: src/main/java/com/example/proyecto32/Porta_aviones.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.proyecto32;\r\n\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class Porta_aviones extends Lugar {\r\n\r\n    private String name;\r\n    private int capHang;\r\n    private List<Avion> aviones_en_espe;\r\n    private int combustibleDisponible;\r\n\r\n    public Portaavion(String name, int capHang, double latitud, double longitud) {\r\n        super(latitud, longitud);\r\n        this.name = name;\r\n        this.capHang = capHang;\r\n        this.aviones_en_espe = new ArrayList<>();\r\n        this.combustibleDisponible = 0;\r\n    }\r\n\r\n    @Override\r\n    public void recibir_aviones(Avion avion) {\r\n        if (aviones_en_espe.size() < capHang) {\r\n            aviones_en_espe.add(avion);\r\n            System.out.println(\"Avión \" + avion + \" recibido en el portaavión \" + name);\r\n        } else {\r\n            System.out.println(\"Portaavión \" + name + \" NO hay campo en los hangares\" + avion);\r\n        }\r\n    }\r\n\r\n    public double getCapHang() {\r\n        return capHang;\r\n    }\r\n\r\n    @Override\r\n    public Avion tramitar_avion(Avion avion) {\r\n        if (!aviones_en_espe.isEmpty()) {\r\n            boolean removed = aviones_en_espe.remove(avion);\r\n            if (removed) {\r\n                System.out.println(\"Avión \" + avion + \" enviando desde el portaavión \" + name);\r\n                return avion;\r\n            } else {\r\n                System.out.println(\"El avión \" + avion + \" no está esperando en el portaavión \" + name);\r\n                return null;\r\n            }\r\n        } else {\r\n            System.out.println(\"No hay aviones esperando en el portaavión \" + name);\r\n            return null;\r\n        }\r\n    }\r\n\r\n    public double getLatitud() {return latitud;}\r\n    @Override\r\n    public List<Avion> getaviones_en_espe() {\r\n        return aviones_en_espe;\r\n    }\r\n\r\n    public String getName() {\r\n        return name;\r\n    }\r\n\r\n    public void setLatitud(double latitud) {\r\n        this.latitud = latitud;\r\n    }\r\n\r\n    public double getLongitud() {\r\n        return longitud;\r\n    }\r\n\r\n    public void setLongitud(double longitud) {\r\n        this.longitud = longitud;\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/proyecto32/Porta_aviones.java b/src/main/java/com/example/proyecto32/Porta_aviones.java
+--- a/src/main/java/com/example/proyecto32/Porta_aviones.java	(revision 230cbe7c8ac36e3994e4f32fde21020e82818bb1)
++++ b/src/main/java/com/example/proyecto32/Porta_aviones.java	(date 1686357272638)
+@@ -11,7 +11,7 @@
+     private List<Avion> aviones_en_espe;
+     private int combustibleDisponible;
+ 
+-    public Portaavion(String name, int capHang, double latitud, double longitud) {
++    public Porta_aviones(String name, int capHang, double latitud, double longitud) {
+         super(latitud, longitud);
+         this.name = name;
+         this.capHang = capHang;
+Index: src/main/java/com/example/proyecto32/AeropuertoV2.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.proyecto32;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class AeropuertoV2 extends Lugar {\r\n\r\n    private String name;\r\n    private int capHang;\r\n    private List<Avion> aviones_en_espe;\r\n    private int combustibleDispo;\r\n\r\n    public AeropuertoV2(String nombre, int capHang, double latitud, double longitud) {\r\n        super(latitud, longitud);\r\n        this.name = nombre;\r\n        this.capHang = capHang;\r\n        this.aviones_en_espe = new ArrayList<>();\r\n        this.combustibleDispo = 0;\r\n    }\r\n    @Override\r\n    public void recibir_aviones(Avion avion) {\r\n        if (aviones_en_espe.size() < capHang) {\r\n            aviones_en_espe.add(avion);\r\n            System.out.println(\"Avión \" + avion + \" recibido en el aeropuerto \" + name);\r\n        } else {\r\n            System.out.println(\"Aeropuerto \" + name + \" sin espacio en los hangares. No se puede recibir el avión \" + avion);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public Avion tramitar_avion(Avion avion) {\r\n        if (!aviones_en_espe.isEmpty()) {\r\n            boolean removed = aviones_en_espe.remove(avion);\r\n            if (removed) {\r\n                System.out.println(\"Avión \" + avion + \" despachado desde el aeropuerto \" + name);\r\n                return avion;\r\n            } else {\r\n                System.out.println(\"El avión \" + avion + \" no está esperando en el aeropuerto \" + name);\r\n                return null;\r\n            }\r\n        } else {\r\n            System.out.println(\"No hay aviones esperando en el aeropuerto \" + name);\r\n            return null;\r\n        }\r\n    }\r\n    @Override\r\n    public List<Avion> getAviones_en_espe() {\r\n        return aviones_en_espe;\r\n    }\r\n    // Otros métodos y getters/setters según sea necesario\r\n    public double getLatitud() {\r\n        return latitud;\r\n    }\r\n\r\n    public double getCapHang() {\r\n        return capHang;\r\n    }\r\n\r\n    public String getName() {\r\n        return name;\r\n    }\r\n\r\n    public void setLatitud(double latitude) {\r\n        this.latitud = latitude;\r\n    }\r\n\r\n    public double getLongitud() {\r\n        return longitud;\r\n    }\r\n\r\n    public void setLongitud(double longitude) {\r\n        this.longitud = longitude;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/proyecto32/AeropuertoV2.java b/src/main/java/com/example/proyecto32/AeropuertoV2.java
+--- a/src/main/java/com/example/proyecto32/AeropuertoV2.java	(revision 230cbe7c8ac36e3994e4f32fde21020e82818bb1)
++++ b/src/main/java/com/example/proyecto32/AeropuertoV2.java	(date 1686357272626)
+@@ -43,8 +43,10 @@
+             return null;
+         }
+     }
++
++
+     @Override
+-    public List<Avion> getAviones_en_espe() {
++    public List<Avion> getaviones_en_espe() {
+         return aviones_en_espe;
+     }
+     // Otros métodos y getters/setters según sea necesario
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"8229fbaf-74b9-4408-a7f2-d96037950118\" name=\"Changes\" comment=\"\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <servers />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 230cbe7c8ac36e3994e4f32fde21020e82818bb1)
++++ b/.idea/workspace.xml	(date 1686715412679)
+@@ -4,11 +4,69 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="8229fbaf-74b9-4408-a7f2-d96037950118" name="Changes" comment="" />
++    <list default="true" id="8229fbaf-74b9-4408-a7f2-d96037950118" name="Changes" comment="">
++      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/imagenes/map.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/Grafo.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/Graph.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/Lugar.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/MainMap.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/Visualizacion.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/proyecto32/bg.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/proyecto32/map.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/com/example/proyecto32/map1.png" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/AeropuertoV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/AeropuertoV2.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/Porta_aviones.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/Porta_aviones.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/Ruta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/proyecto32/Ruta.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Class" />
++      </list>
++    </option>
++  </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="MavenImportPreferences">
++    <option name="generalSettings">
++      <MavenGeneralSettings>
++        <option name="mavenHome" value="Use Maven wrapper" />
++        <option name="useMavenConfig" value="true" />
++      </MavenGeneralSettings>
++    </option>
++  </component>
++  <component name="ProjectLevelVcsManager">
++    <ConfirmationsSetting value="2" id="Add" />
++  </component>
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
++    "last_opened_file_path": "//Mac/Home/Documents/U/III SEMESTRE U/DATOS I/josegay/Proyecto32/src/main/resources/com/example/proyecto32",
++    "project.structure.last.edited": "Project",
++    "project.structure.proportion": "0.0",
++    "project.structure.side.proportion": "0.0",
++    "settings.editor.selected.configurable": "preferences.pluginManager"
++  }
++}]]></component>
++  <component name="RecentsManager">
++    <key name="CopyFile.RECENT_KEYS">
++      <recent name="\\Mac\Home\Documents\U\III SEMESTRE U\DATOS I\josegay\Proyecto32\src\main\resources\com\example\proyecto32" />
++      <recent name="\\Mac\Home\Documents\U\III SEMESTRE U\DATOS I\josegay\Proyecto32\src\imagenes" />
++    </key>
++    <key name="MoveFile.RECENT_KEYS">
++      <recent name="\\Mac\Home\Documents\U\III SEMESTRE U\DATOS I\josegay\Proyecto32\src\main\resources\com\example\proyecto32" />
++    </key>
+   </component>
+   <component name="TaskManager">
+     <servers />
+Index: .idea/uiDesigner.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/uiDesigner.xml b/.idea/uiDesigner.xml
+new file mode 100644
+--- /dev/null	(date 1686359300871)
++++ b/.idea/uiDesigner.xml	(date 1686359300871)
+@@ -0,0 +1,124 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Palette2">
++    <group name="Swing">
++      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />
++      </item>
++      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.svg" removable="false" auto-create-binding="false" can-attach-label="true">
++        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />
++        <initial-values>
++          <property name="text" value="Button" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="RadioButton" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="CheckBox" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="Label" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.svg" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">
++          <preferred-size width="-1" height="20" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.svg" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.svg" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
++      </item>
++    </group>
++  </component>
++</project>
+\ No newline at end of file
