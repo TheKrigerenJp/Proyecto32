@@ -1,5 +1,8 @@
 package com.example.proyecto32;
 
+/**
+ * se define la clase con sus respcetivas variables
+ */
 public class Ruta {
     private double peligro;
     private Lugar despegue;
@@ -11,6 +14,10 @@ public class Ruta {
         this.peligro = peligro;
     }
 
+    /**
+     * Funcion que calcula la distancia de cada avion
+     * @return
+     */
     public double Distancia() {
         double latitud1 = Math.toRadians(despegue.getLatitude());
         double longitud1 = Math.toRadians(despegue.getLongitude());
@@ -30,6 +37,10 @@ public class Ruta {
         return distancia;
     }
 
+    /**
+     * Funcion que calcula los pesos de cada avion
+     * @return
+     */
     public double Peso() {
         double distancia = Distancia();
         double peso = distancia;
@@ -45,7 +56,10 @@ public class Ruta {
         return peso;
     }
 
-    // Getters y setters
+    /**
+     * Getters y setters
+      */
+
 
     public Lugar getDespegue() {
         return despegue;

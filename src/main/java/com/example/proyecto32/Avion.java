@@ -3,13 +3,13 @@ package com.example.proyecto32;
 public class Avion {
     private String name;
     private int speed;
-    private int eficiencia;
+    private double eficiencia;
     private int fortaleza;
     private String ubicacionActual;
     private EstadoAvion estate;
     private int combustible;
 
-    public Avion(String name, int speed, int eficiencia, int fortaleza) {
+    public Avion(String name, int speed, double eficiencia, int fortaleza) {
         this.name = name;
         this.speed = speed;
         this.eficiencia = eficiencia;
@@ -51,7 +51,7 @@ public class Avion {
         this.estate = estate;
     }
 
-    public int getEficiencia() {
+    public double getEficiencia() {
         return eficiencia;
     }
 
