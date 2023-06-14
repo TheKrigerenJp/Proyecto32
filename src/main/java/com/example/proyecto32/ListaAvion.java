@@ -38,7 +38,7 @@ public class ListaAvion {
             while (nodoActual != null) {
                 Avion avion = nodoActual.getAvion();
                 String linea = String.format("%s,%d,%.2f,%d",
-                        avion.getName(), avion.getVelocidad(), avion.getEficiencia(), avion.getFortaleza());
+                        avion.getName(), avion.getSpeed(), avion.getEficiencia(), avion.getFortaleza());
                 escritor.write(linea);
                 escritor.newLine();
                 nodoActual = nodoActual.getSiguiente();
@@ -136,7 +136,7 @@ public class ListaAvion {
         Nodo nodoActual = head;
         while (nodoActual != null) {
             System.out.println("Nombre: " + nodoActual.getAvion().getName());
-            System.out.println("Velocidad: " + nodoActual.getAvion().getVelocidad());
+            System.out.println("Velocidad: " + nodoActual.getAvion().getSpeed());
             System.out.println("Eficiencia: " + nodoActual.getAvion().getEficiencia());
             System.out.println("Fortaleza: " + nodoActual.getAvion().getFortaleza());
             System.out.println("--------------------------");
